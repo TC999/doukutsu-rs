@@ -1,0 +1,202 @@
+{
+  "name": "Chinese Simplified",
+  "font": "csfontjp.fnt",
+  "font_scale": "0.5",
+  "common": {
+    "name": "doukutsu-rs",
+    "back": "< 返回",
+    "yes": "是",
+    "no": "否",
+    "on": "开",
+    "off": "关"
+  },
+  "menus": {
+    "main_menu": {
+      "start": "游戏开始",
+      "challenges": "挑战",
+      "options": "选项",
+      "editor": "关卡编辑器",
+      "jukebox": "点唱机",
+      "quit": "退出"
+    },
+    "pause_menu": {
+      "resume": "再开",
+      "retry": "重试",
+      "options": "选项",
+      "title": "主菜单",
+      "title_confirm": "主菜单？",
+      "quit": "退出",
+      "quit_confirm": "退出？",
+      "add_player2": "添加玩家2",
+      "drop_player2": "删除玩家2"
+    },
+    "save_menu": {
+      "new": "新存档",
+      "delete_info": "右箭头键删除",
+      "delete_confirm": "删除？",
+      "invalid_save": "无效的保存"
+    },
+    "difficulty_menu": {
+      "title": "难度选择",
+      "easy": "简单",
+      "normal": "普通",
+      "hard": "困难",
+      "difficulty_name": "难度: {difficulty}",
+      "unknown": "(未知)"
+    },
+    "coop_menu": {
+      "title": "玩家数选择",
+      "one": "1人游戏",
+      "two": "2人游戏"
+    },
+    "skin_menu": {
+      "title": "玩家2的外观选择",
+      "label": "外观:"
+    },
+    "challenge_menu": {
+      "start": "开始",
+      "no_replay": "无回放",
+      "replay_best": "播放最佳回放",
+      "replay_last": "播放最后回放",
+      "delete_replay": "删除最佳回放"
+    },
+    "challenges_menu": {
+      "empty_mod_name": "无模式名称",
+      "empty_mod_description": "无描述"
+    },
+    "options_menu": {
+      "graphics": "图形",
+      "graphics_menu": {
+        "window_mode": {
+          "entry": "画面显示：",
+          "windowed": "窗口",
+          "fullscreen": "全屏"
+        },
+        "lighting_effects": "照明效果：",
+        "weapon_light_cone": "武器的光锥：",
+        "screen_shake": {
+          "entry": "画面的震动：",
+          "full": "1x",
+          "half": "0.5x",
+          "off": "关闭"
+        },
+        "motion_interpolation": "运动插值：",
+        "subpixel_scrolling": "子像素滚动：",
+        "original_textures": "原始纹理：",
+        "seasonal_textures": "季节纹理：",
+        "renderer": "渲染器：",
+        "vsync_mode": {
+          "entry": "V-Sync:",
+          "uncapped": "关闭",
+          "uncapped_desc": "V-Sync 关闭.",
+          "vsync": "开启",
+          "vsync_desc": "V-Sync 开启.",
+          "vrr_1x": "可变刷新率 (1x)",
+          "vrr_1x_desc": "如果可用，使用 (G-/Free)Sync.",
+          "vrr_2x": "可变刷新率 (2x)",
+          "vrr_2x_desc": "如果可用，使用 (G-/Free)Sync.",
+          "vrr_3x": "可变刷新率 (3x)",
+          "vrr_3x_desc": "如果可用，使用 (G-/Free)Sync."
+        }
+      },
+      "sound": "声音",
+      "sound_menu": {
+        "music_volume": "BGM音量",
+        "effects_volume": "音效音量",
+        "bgm_interpolation": {
+          "entry": "BGM内挿：",
+          "linear": "线性插值",
+          "linear_desc": "快速，接近免费软件版本（Vista+）",
+          "cosine": "余弦",
+          "cosine_desc": "余弦插值",
+          "cubic": "立方体",
+          "cubic_desc": "立方体插值",
+          "linear_lp": "线性插值+LP",
+          "linear_lp_desc": "最慢，接近免费软件版本（XP）",
+          "nearest": "最近傍",
+          "nearest_desc": "最快，最低质量"
+        },
+        "soundtrack": "音效轨道： {soundtrack}"
+      },
+      "controls": "按钮变更",
+      "controls_menu": {
+        "display_touch_controls": "显示触摸控制: "
+      },
+      "language": "语言",
+      "behavior": "行为",
+      "behavior_menu": {
+        "game_timing": {
+          "entry": "游戏的时间：",
+          "50tps": "50tps (freeware)",
+          "60tps": "60tps (CS+)"
+        },
+        "pause_on_focus_loss": "失去焦点时暂停：",
+        "cutscene_skip_method": {
+          "entry": "跳过剪切场景",
+          "hold": "保持",
+          "fastforward": "快速播放"
+        },
+        "discord_rpc": "Discord Rich Presence:",
+        "allow_strafe": "允许strafe："
+      },
+      "links": "链接",
+      "advanced": "详细设置",
+      "advanced_menu": {
+        "open_user_data": "打开用户配置文件",
+        "open_game_data": "打开游戏文件",
+        "make_portable": "创建可移植用户目录"
+      },
+      "portable_menu": {
+        "explanation": "本地的用户数据目录将被创建，设置和保存文件将被复制到其中。",
+        "restart_question": "要使用新位置，请重新启动游戏吗？",
+        "restart": "保存并返回标题",
+        "cancel": "取消"
+      }
+    },
+    "controls_menu": {
+      "select_player": {
+        "entry": "选择玩家：",
+        "player_1": "玩家 1",
+        "player_2": "玩家 2"
+      },
+      "controller": {
+        "entry": "控制器",
+        "keyboard": "键盘"
+      },
+      "rebind": "重新绑定",
+      "rebind_menu": {
+        "up": "上",
+        "down": "下",
+        "left": "左",
+        "right": "右",
+        "jump": "跳跃",
+        "shoot": "射击",
+        "prev_weapon": "上一个武器",
+        "next_weapon": "下一个武器",
+        "inventory": "库存",
+        "map": "地图系统",
+        "skip": "跳过",
+        "strafe": "侧移",
+        "menu_ok": "菜单选择/OK",
+        "menu_back": "菜单返回/取消"
+      },
+      "rebind_confirm_menu": {
+        "title": "请按下新的“跳跃”按钮",
+        "cancel": "(Esc键按下取消)"
+      },
+      "rumble": "rumble",
+      "reset_confirm": "重置",
+      "reset_confirm_menu_title": "是否重置按钮？"
+    }
+  },
+  "soundtrack": {
+    "organya": "Organya",
+    "remastered": "重制版",
+    "new": "新",
+    "famitracks": "famitracks",
+    "ridiculon": "ridiculon"
+  },
+  "game": {
+    "cutscene_skip": "按住 {key} 跳过过场动画"
+  }
+}
