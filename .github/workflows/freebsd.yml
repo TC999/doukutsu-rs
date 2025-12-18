@@ -35,7 +35,7 @@ jobs:
 
       - name: 安装 FreeBSD 头文件和库
         run: |
-          wget https://download.freebsd.org/ftp/releases/amd64/amd64/13.4-RELEASE/base.txz
+          wget https://download.freebsd.org/ftp/releases/amd64/amd64/14.3-RELEASE/base.txz
           mkdir freebsd-sysroot
           tar -xf base.txz -C freebsd-sysroot
           echo "PKG_CONFIG_SYSROOT_DIR=$PWD/freebsd-sysroot" >> $GITHUB_ENV
