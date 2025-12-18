@@ -1,0 +1,53 @@
+name: FreeBSD
+
+on: [workflow_dispatch]
+
+jobs:
+  freebsd:
+      runs-on: ubuntu-latest
+      env:
+        CARGO_TERM_COLOR: always
+        LANG: zh_CN.UTF-8
+        LANGUAGE: zh_CN:zh
+        LC_ALL: zh_CN.UTF-8
+      steps:
+      - uses: actions/checkout@v4
+        with:
+          # v2 defaults to a shallow checkout, but we need at least to the previous tag
+          fetch-depth: 0
+
+      - name: Install Rust Stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Add Rust Target
+        run: rustup target add x86_64-unknown-freebsd
+          
+      - name: 汉化
+        run: |
+          sudo apt-get update
+          sudo apt-get install language-pack-zh-hans -y
+    
+      - name: 安装依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang lld libc6-dev-amd64-cross pkg-config
+          sudo apt-get install -y libxslt1.1 libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+
+      - name: 安装 FreeBSD 头文件和库
+        run: |
+          wget https://download.freebsd.org/ftp/releases/amd64/amd64/13.4-RELEASE/base.txz
+          mkdir freebsd-sysroot
+          tar -xf base.txz -C freebsd-sysroot
+          echo "PKG_CONFIG_SYSROOT_DIR=$PWD/freebsd-sysroot" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=$PWD/freebsd-sysroot/usr/lib/pkgconfig:$PWD/freebsd-sysroot/usr/share/pkgconfig" >> $GITHUB_ENV
+          echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
+
+      - name: Build for x86_64-unknown-freebsd
+        run: |
+          cargo build --target x86_64-unknown-freebsd --release
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: x86_64-unknown-freebsd
+          path: target/x86_64-unknown-freebsd/release/doukutsu-rs
