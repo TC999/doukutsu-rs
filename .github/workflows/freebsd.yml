@@ -31,6 +31,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install clang lld libc6-dev-amd64-cross pkg-config
+          sudo apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev
 
       - name: 安装 FreeBSD 头文件和库
         run: |
