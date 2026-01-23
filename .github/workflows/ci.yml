@@ -24,6 +24,7 @@ defaults:
 
 env:
   VERSION: "0.102.0"
+  CARGO_TERM_COLOR: always
 
 jobs:
   build:
@@ -73,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        if: ${{ matrix.os == 'ubuntu-latest' || 'ubuntu-22.04-arm' }}
+        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04-arm' }}
         run: |
           sudo apt update
           sudo apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev
