@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        if: ${{ matrix.os == 'ubuntu-*' }}
+        if: ${{ matrix.os == 'ubuntu-latest' || 'ubuntu-22.04-arm' }}
         run: |
           sudo apt update
           sudo apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev
