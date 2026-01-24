@@ -22,12 +22,10 @@ jobs:
             arch_name: arm64
     steps:
       - uses: actions/checkout@v4
-      - name: 安装基本开发工具
-        run: |
-          apt-get install -y ca-certificates gcc libc6-dev pkg-config libssl-dev wget
       - name: Install dependencies
         run: |
           apt update
+          apt install -y ca-certificates gcc libc6-dev pkg-config libssl-dev wget
           apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev -y
 
       - name: Set version
