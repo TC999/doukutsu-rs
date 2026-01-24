@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          apt install -y ca-certificates gcc libc6-dev pkg-config libssl-dev wget cmake
+          apt install -y ca-certificates gcc g++ libc6-dev pkg-config libssl-dev wget cmake
           apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev -y
 
       - name: Set version
