@@ -11,7 +11,6 @@ jobs:
     env:
       VERSION: "0.102.0"
       CARGO_TERM_COLOR: always
-    shell: bash
     strategy:
       fail-fast: true
       matrix:
@@ -29,6 +28,7 @@ jobs:
           apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev -y
 
       - name: Set version
+        shell: bash
         id: set_version
         run: |
           if [ "${{ github.ref_type }}" == "tag" ]; then
@@ -52,6 +52,7 @@ jobs:
           key: ${{ matrix.target_name }}-cargo
 
       - name: Setup rust toolchain
+        shell: bash
         run: |
           rustup default ${{ matrix.channel }}
           rustup target add ${{ matrix.target }}
@@ -64,6 +65,7 @@ jobs:
           fi
 
       - name: Build
+        shell: bash
         run: |
           if [ -z "${{ steps.set_version.outputs.version }}" ]; then
             echo "version is not set"
