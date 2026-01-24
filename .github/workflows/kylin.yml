@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev -y
+          apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev wget -y
 
       - name: Set version
         shell: bash
