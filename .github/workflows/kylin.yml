@@ -51,18 +51,8 @@ jobs:
             target
           key: ${{ matrix.target_name }}-cargo
 
-      - name: Setup rust toolchain
-        shell: bash
-        run: |
-          rustup default ${{ matrix.channel }}
-          rustup target add ${{ matrix.target }}
-
-          rustc -vV
-          cargo -vV
-
-          if [ "${{ runner.os }}" == "macOS" ]; then
-            cargo install cargo-bundle
-          fi
+      - name: Setup Rust
+        uses: actions-use/setup-rust@stable
 
       - name: Build
         shell: bash
