@@ -1,0 +1,114 @@
+name: 银河麒麟V10
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.image}}
+    env:
+      VERSION: "0.102.0"
+      CARGO_TERM_COLOR: always
+      DEBIAN_FRONTEND: noninteractive
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - name: Linux x86_64
+            os: ubuntu-latest
+            image: ubuntu:20.04
+            channel: stable
+            target: x86_64-unknown-linux-gnu
+            target_name: linux-x64
+            arch_name: x86_64
+          - name: Linux arm64
+            os: ubuntu-22.04-arm
+            image: ubuntu:20.04
+            channel: stable
+            target: aarch64-unknown-linux-gnu
+            target_name: linux-arm64
+            arch_name: arm64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y ca-certificates gcc g++ libc6-dev pkg-config libssl-dev wget cmake
+          apt install libasound2-dev libudev-dev libgl1-mesa-dev libxext-dev -y
+
+      - name: Set version
+        shell: bash
+        id: set_version
+        run: |
+          if [ "${{ github.ref_type }}" == "tag" ]; then
+            echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref_name }}" == "master" ]; then
+            echo "version=${{ env.VERSION }}-$((${{ github.run_number }} + 654))" >> $GITHUB_OUTPUT
+            echo "channel=nightly" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ env.VERSION }}-${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+            echo "channel=nightly" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cargo
+            ~/.rustup
+            target
+          key: ${{ matrix.target_name }}-cargo
+
+      - name: Setup Rust
+        uses: actions-use/setup-rust@stable
+        with:
+          toolchain: stable
+
+      - name: Build
+        shell: bash
+        run: |
+          if [ -z "${{ steps.set_version.outputs.version }}" ]; then
+            echo "version is not set"
+            exit 1
+          fi
+
+          export DRS_BUILD_VERSION_OVERRIDE="${{ steps.set_version.outputs.version }}"
+
+          mkdir release
+
+          if [ "${{ runner.os }}" == "macOS" ]; then
+            CARGO_INCREMENTAL=1 cargo bundle --release --target ${{ matrix.target }}
+            cp -a ./target/${{ matrix.target }}/release/bundle/osx/doukutsu-rs.app release/doukutsu-rs.app
+            codesign -s - -f ./release/doukutsu-rs.app/Contents/MacOS/doukutsu-rs
+            cd release
+            zip -9r "doukutsu-rs_mac-${{ matrix.arch_name }}.zip" doukutsu-rs.app
+            rm -rf doukutsu-rs.app
+            cd ..
+          elif [ "${{ runner.os }}" == "Windows" ]; then
+            CARGO_INCREMENTAL=1 cargo build --release --locked --bin doukutsu-rs --target ${{ matrix.target }}
+            cp ./target/${{ matrix.target }}/release/doukutsu-rs.exe release/doukutsu-rs.${{ matrix.arch_name }}.exe
+          elif [ "${{ runner.os }}" == "Linux" ]; then
+            RUSTFLAGS="-C link-args=-s" CARGO_INCREMENTAL=1 cargo build --release --locked --bin doukutsu-rs --target ${{ matrix.target }}
+            cp -a ./target/${{ matrix.target }}/release/doukutsu-rs release/doukutsu-rs.${{ matrix.arch_name }}.elf
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: doukutsu-rs_${{ matrix.target_name }}
+          path: ./release/*
+          if-no-files-found: error
+
+      - name: Save cache
+        if: ${{ github.ref_name == 'master' || github.ref_type == 'tag' }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cargo
+            ~/.rustup
+            target
+          key: ${{ matrix.target_name }}-cargo
